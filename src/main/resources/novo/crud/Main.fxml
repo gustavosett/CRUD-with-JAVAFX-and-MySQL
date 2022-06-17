@@ -39,7 +39,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <ToggleButton fx:id="btnMasc" mnemonicParsing="false" text="Masculino" />
-                  <ToggleButton fx:id="BtnFem" mnemonicParsing="false" text="Feminino" />
+                  <ToggleButton fx:id="btnFem" mnemonicParsing="false" text="Feminino" />
                </children>
             </HBox>
          </children>

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
@@ -38,9 +39,9 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnMasc;
     @FXML
-    private ToggleButton BtnFem;
+    private ToggleButton btnFem;
     @FXML
-    private TableView<?> tvCadastros;
+    private TableView<Pessoa> tvCadastros;
     @FXML
     private TableColumn<Pessoa, String> colNome;
     @FXML
@@ -61,20 +62,35 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        mostraUsuarios();
     }    
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        if(event.getSource() == btnCadastrar)
+        {
+            botaoCadastrar();
+        }
     }
     
     public Connection getConnection(){
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuarios", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuarios", "root", "senha");
             return conn;
         }catch (Exception ex){
             System.out.println("Erro: " + ex.getMessage());
             return null;
+        }
+    }
+    
+    public String isSelected(){
+        if (btnMasc.isSelected()){
+            return "M";
+        } else if (btnFem.isSelected()){
+            return "F";
+        } else {
+            return "N";
         }
     }
 
@@ -100,11 +116,30 @@ public class MainController implements Initializable {
     }
 
     public void mostraUsuarios(){
-        ObservableList<Pessoa> list = getListaUsuarios();
+        ObservableList<Pessoa> lista = getListaUsuarios();
 
         colID.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("id"));
         colNome.setCellValueFactory(new PropertyValueFactory<Pessoa, String>("nome"));
         colIdade.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("idade"));
         colSexo.setCellValueFactory(new PropertyValueFactory<Pessoa, Character>("sexo"));
+        
+        tvCadastros.setItems(lista);
+    }
+    
+    private void botaoCadastrar(){
+        String query = "INSERT INTO usuarios VALUES ('" + tfNome.getText() + "'," + tfIdade.getText() + ",'" + isSelected() + "')";
+        executeQuery(query);
+        mostraUsuarios();
+    }
+
+    private void executeQuery(String query) {
+        Connection conn = getConnection();
+        Statement st;
+        try {
+            st = conn.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 }
