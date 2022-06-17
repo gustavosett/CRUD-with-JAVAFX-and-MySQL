@@ -76,7 +76,7 @@ public class MainController implements Initializable {
     public Connection getConnection(){
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuarios", "root", "senha");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/users", "root", "senha");
             return conn;
         }catch (Exception ex){
             System.out.println("Erro: " + ex.getMessage());
@@ -97,7 +97,7 @@ public class MainController implements Initializable {
     public ObservableList<Pessoa> getListaUsuarios(){
         ObservableList<Pessoa> listaPessoa = FXCollections.observableArrayList();
         Connection conn = getConnection();
-        String query = "SELECT * FROM usuarios";
+        String query = "SELECT * FROM users";
         Statement st;
         ResultSet rs;
 
@@ -127,7 +127,7 @@ public class MainController implements Initializable {
     }
     
     private void botaoCadastrar(){
-        String query = "INSERT INTO usuarios VALUES ('" + tfNome.getText() + "'," + tfIdade.getText() + ",'" + isSelected() + "')";
+        String query = "INSERT INTO usuarios VALUES (" + 1 + ",'" + tfNome.getText() + "'," + tfIdade.getText() + ",'" + isSelected() + "')";
         executeQuery(query);
         mostraUsuarios();
     }
