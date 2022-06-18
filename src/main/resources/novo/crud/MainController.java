@@ -63,13 +63,15 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         mostraUsuarios();
+        
     }    
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        if(event.getSource() == btnCadastrar)
-        {
+        if(event.getSource() == btnCadastrar){
             botaoCadastrar();
+        } else if (event.getSource() == btnAtualizar){
+            botaoAtualizar();
         }
     }
     
@@ -118,7 +120,7 @@ public class MainController implements Initializable {
     public void mostraUsuarios(){
         ObservableList<Pessoa> lista = getListaUsuarios();
 
-        colID.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("id"));
+        colID.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("iD"));
         colNome.setCellValueFactory(new PropertyValueFactory<Pessoa, String>("nome"));
         colIdade.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("idade"));
         colSexo.setCellValueFactory(new PropertyValueFactory<Pessoa, Character>("sexo"));
@@ -127,9 +129,19 @@ public class MainController implements Initializable {
     }
     
     private void botaoCadastrar(){
-        String query = "INSERT INTO usuarios VALUES ('" + tfNome.getText() + "'," + tfIdade.getText() + ",'" + isSelected() + "')";
+        String query = "INSERT INTO usuarios (nome, idade, sexo) VALUES ('" +
+                tfNome.getText() + "', " + tfIdade.getText() + ", '" + isSelected() + "')";
         executeQuery(query);
         mostraUsuarios();
+    }
+    
+    private void botaoAtualizar() {
+        Pessoa pes = tvCadastros.getSelectionModel().getSelectedItem();
+        String query = "UPDATE usuarios SET nome = '" + tfNome.getText() +
+                "', idade = " + tfIdade.getText() + "," + "sexo = '" + isSelected() + " WHERE id = " + String.valueOf(pes.getiD());
+        executeQuery(query);
+        mostraUsuarios();
+        
     }
 
     private void executeQuery(String query) {
