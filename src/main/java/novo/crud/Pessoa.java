@@ -10,24 +10,24 @@ package novo.crud;
  */
 public class Pessoa {
     
-    private int iD;
+    private int id;
     private String nome;
     private int idade;
     private char sexo;
 
     public Pessoa(int iD, String nome, int idade, char sexo) {
-        this.iD = iD;
+        this.id = iD;
         this.nome = nome;
         this.idade = idade;
         this.sexo = sexo;
     }
 
-    public int getiD() {
-        return iD;
+    public int getId() {
+        return id;
     }
 
-    public void setiD(int iD) {
-        this.iD = iD;
+    public void setId(int iD) {
+        this.id = iD;
     }
 
     public String getNome() {

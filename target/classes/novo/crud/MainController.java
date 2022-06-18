@@ -72,6 +72,13 @@ public class MainController implements Initializable {
             botaoCadastrar();
         } else if (event.getSource() == btnAtualizar){
             botaoAtualizar();
+        } else if (event.getSource() == btnDeletar) {
+            botaoDeletar();
+        }
+        if(event.getSource() == btnMasc){
+            btnFem.setSelected(false);
+        } else if (event.getSource() == btnFem){
+            btnMasc.setSelected(false);
         }
     }
     
@@ -120,7 +127,7 @@ public class MainController implements Initializable {
     public void mostraUsuarios(){
         ObservableList<Pessoa> lista = getListaUsuarios();
 
-        colID.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("iD"));
+        colID.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("id"));
         colNome.setCellValueFactory(new PropertyValueFactory<Pessoa, String>("nome"));
         colIdade.setCellValueFactory(new PropertyValueFactory<Pessoa, Integer>("idade"));
         colSexo.setCellValueFactory(new PropertyValueFactory<Pessoa, Character>("sexo"));
@@ -138,10 +145,16 @@ public class MainController implements Initializable {
     private void botaoAtualizar() {
         Pessoa pes = tvCadastros.getSelectionModel().getSelectedItem();
         String query = "UPDATE usuarios SET nome = '" + tfNome.getText() +
-                "', idade = " + tfIdade.getText() + "," + "sexo = '" + isSelected() + " WHERE id = " + String.valueOf(pes.getiD());
+                "', idade = " + tfIdade.getText() + "," + "sexo = '" + isSelected() + "' WHERE id = " + String.valueOf(pes.getId());
         executeQuery(query);
         mostraUsuarios();
-        
+    }
+    
+    private void botaoDeletar() {
+        Pessoa pes = tvCadastros.getSelectionModel().getSelectedItem();
+        String query = "DELETE FROM usuarios WHERE id = " + String.valueOf(pes.getId()) + "";
+        executeQuery(query);
+        mostraUsuarios();
     }
 
     private void executeQuery(String query) {
