@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -76,38 +75,13 @@ public class MainController implements Initializable {
         } else if (event.getSource() == btnDeletar) {
             botaoDeletar();
         }
-    }
-    
-    @FXML
-    private void genderButtonAction(ActionEvent event) {
         if(event.getSource() == btnMasc){
             btnFem.setSelected(false);
         } else if (event.getSource() == btnFem){
             btnMasc.setSelected(false);
         }
     }
-
-    @FXML
-    private void tableMouseClicked(Event event) {
-        Pessoa pes = tvCadastros.getSelectionModel().getSelectedItem();
-        tfNome.setText(pes.getNome());
-        tfIdade.setText(String.valueOf(pes.getIdade()));
-        switch (pes.getSexo()) {
-            case 'M':
-                btnFem.setSelected(false);
-                btnMasc.setSelected(true);
-                break;
-            case 'F':
-                btnFem.setSelected(true);
-                btnMasc.setSelected(false);
-                break;
-            default:
-                btnFem.setSelected(false);
-                btnMasc.setSelected(false);
-                break;
-        }
-    }
-
+    
     public Connection getConnection(){
         Connection conn;
         try {
@@ -161,19 +135,11 @@ public class MainController implements Initializable {
         tvCadastros.setItems(lista);
     }
     
-    private void limpa(){
-        btnFem.setSelected(false);
-        btnMasc.setSelected(false);
-        tfNome.setText("");
-        tfIdade.setText("");
-    }
-    
     private void botaoCadastrar(){
         String query = "INSERT INTO usuarios (nome, idade, sexo) VALUES ('" +
                 tfNome.getText() + "', " + tfIdade.getText() + ", '" + isSelected() + "')";
         executeQuery(query);
         mostraUsuarios();
-        limpa();
     }
     
     private void botaoAtualizar() {
@@ -182,7 +148,6 @@ public class MainController implements Initializable {
                 "', idade = " + tfIdade.getText() + "," + "sexo = '" + isSelected() + "' WHERE id = " + String.valueOf(pes.getId());
         executeQuery(query);
         mostraUsuarios();
-        limpa();
     }
     
     private void botaoDeletar() {
@@ -190,7 +155,6 @@ public class MainController implements Initializable {
         String query = "DELETE FROM usuarios WHERE id = " + String.valueOf(pes.getId()) + "";
         executeQuery(query);
         mostraUsuarios();
-        limpa();
     }
 
     private void executeQuery(String query) {

@@ -38,8 +38,8 @@
             <TextField fx:id="tfIdade" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <ToggleButton fx:id="btnMasc" mnemonicParsing="false" onAction="#genderButtonAction" text="Masculino" />
-                  <ToggleButton fx:id="btnFem" mnemonicParsing="false" onAction="#genderButtonAction" text="Feminino" />
+                  <ToggleButton fx:id="btnMasc" mnemonicParsing="false" onAction="#handleButtonAction" text="Masculino" />
+                  <ToggleButton fx:id="btnFem" mnemonicParsing="false" onAction="#handleButtonAction" text="Feminino" />
                </children>
             </HBox>
          </children>
@@ -53,7 +53,7 @@
             </Label>
          </children>
       </HBox>
-      <TableView fx:id="tvCadastros" layoutX="43.0" layoutY="202.0" onMouseClicked="#tableMouseClicked" prefHeight="347.0" prefWidth="421.0">
+      <TableView fx:id="tvCadastros" layoutX="43.0" layoutY="202.0" prefHeight="347.0" prefWidth="421.0">
         <columns>
           <TableColumn fx:id="colID" prefWidth="57.0" text="ID" />
           <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="259.0" text="NOME" />
